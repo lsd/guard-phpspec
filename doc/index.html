@@ -1,0 +1,176 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>
+  File: README
+  
+    &mdash; Documentation by YARD 0.8.7
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '';
+  framesUrl = "frames.html#!" + escape(window.location.href);
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="_index.html">Index</a> &raquo; 
+    <span class="title">File: README</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><div id='filecontents'>
+<h1 id="label-Guard%3A%3APHPSpec">Guard::PHPSpec</h1>
+
+<h2 id="label-Description">Description</h2>
+
+<p>guard-phpspec allows you to automatically run <a
+href="http://www.phpunit.de">PHPSpec</a> tests when sources are modified.
+It helps with integrating test-driven development (TDD) into your
+development process: Just launch guard-phpspec before you start working and
+it will notify you about the status of your tests!</p>
+
+<p><em>Note</em>: Although guard-phpspec should work with any <a
+href="http://php.net">PHP</a> version <a
+href="http://www.phpunit.de">PHPSpec</a> supports, it has only been tested
+on <a href="http://php.net">PHP</a> 5.3.8 and 5.4.4.</p>
+
+<h2 id="label-Author">Author</h2>
+
+<p><a href="https://github.com/lsd">Isam Machlovi</a></p>
+
+<h2 id="label-Install">Install</h2>
+
+<p>Please be sure to have <a href="http://php.net">PHP</a>, <a
+href="http://www.phpunit.de">PHPSpec</a> and <a
+href="http://ruby-lang.org">Ruby</a> installed on your machine before you
+proceed with the installation.</p>
+
+<p>The latest versions of <a href="http://ruby-lang.org">Ruby</a> come with a
+packages-manager called <code>gem</code>. <code>gem</code> can be used to
+install various packages, including guard-phpspec.</p>
+
+<p>To install guard-phpspec, run the following command in the terminal:</p>
+
+<pre class="code ruby"><code class="ruby"></code></pre>
+
+<h2 id="label-Usage">Usage</h2>
+
+<p>Please read the <a href="https://github.com/guard/guard#readme">Guard usage
+documentation</a>.</p>
+
+<h2 id="label-Guardfile">Guardfile</h2>
+
+<p>guard-phpspec can be used with any kind of <a href="http://php.net">PHP</a>
+projects that uses PHPSpec as its testing framwork. Please read the <a
+href="https://github.com/guard/guard#readme">Guard documentation</a> for
+more information about the Guardfile DSL.</p>
+
+<p>By default, guard-phpspec will use the current working directory (pwd) to
+search for tests and run them on start (if you enabled the
+<code>:all_on_start</code> option).</p>
+
+<h3 id="label-Example+PHP+project">Example PHP project</h3>
+
+<p>The <a href="http://www.phpunit.de/manual/current/en/">PHPSpec
+documentaion</a> uses the <a
+href="https://github.com/sebastianbergmann/php-object-freezer/">Object
+Freezer</a> library as an example on how to organize tests. This project
+uses the <code>Tests</code> directory for its tests.</p>
+
+<p>An example of the Guardfile for the same project would look something like:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_guard'>guard</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>phpunit</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='symbol'>:tests_path</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Tests</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='symbol'>:cli</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>--colors</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>do</span>
+  <span class='comment'># Watch tests files
+</span>  <span class='id identifier rubyid_watch'>watch</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>%r{</span><span class='tstring_content'>^.+Test\.php$</span><span class='regexp_end'>}</span></span><span class='rparen'>)</span>
+
+  <span class='comment'># Watch library files and run their tests
+</span>  <span class='id identifier rubyid_watch'>watch</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>%r{</span><span class='tstring_content'>^Object/(.+)\.php</span><span class='regexp_end'>}</span></span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_m'>m</span><span class='op'>|</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Tests/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_m'>m</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_content'>Test.php</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
+<span class='kw'>end</span>
+</code></pre>
+
+<h2 id="label-Options">Options</h2>
+
+<p>The following options can be passed to Guard::PHPSpec:</p>
+
+<pre class="code ruby"><code class="ruby">:all_on_start =&gt; false        # Run all tests on startup.
+                              # default: true
+
+:all_after_pass =&gt; false      # Run all tests after changed tests pass. This ensures
+                              # that the process of making changed tests pass didn&#39;t
+                              # break something else.
+                              # default: true
+
+:keep_failed =&gt; false         # Remember failed tests and keep running them with
+                              # each change until they pass.
+                              # default: true
+
+:tests_path =&gt; &#39;tests&#39;        # Relative path to the tests directory. This path
+                              # is used when running all the tests.
+                              # default: the current working directory (pwd)
+
+:cli =&gt; &#39;--colors&#39;            # The options passed to the phpunit command
+                              # when running the tests.
+                              # default: nil
+</code></pre>
+
+<h2 id="label-Development">Development</h2>
+<ul><li>
+<p>Source hosted at <a
+href="https://github.com/lsd/guard-phpspec">GitHub/lsd</a></p>
+</li><li>
+<p>Report issues/questions/requests on <a
+href="https://github.com/lsd/guard-phpspec/issues">GitHub Issues</a></p>
+</li></ul>
+</div></div>
+
+    <div id="footer">
+  Generated on Sat Aug 24 15:20:44 2013 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.7 (ruby-2.0.0).
+</div>
+
+  </body>
+</html>
