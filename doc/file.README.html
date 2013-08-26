@@ -64,9 +64,9 @@
     <div id="content"><div id='filecontents'>
 <h1 id="label-Guard%3A%3APHPSpec">Guard::PHPSpec</h1>
 
-<h2 id="label-Description">Description</h2>
+<h2 id="label-Desc">Desc</h2>
 
-<p>guard-phpspec allows you to automatically run <a
+<p><strong>guard-phpspec</strong> allows you to automatically run <a
 href="http://www.phpunit.de">PHPSpec</a> tests when sources are modified.
 It helps with integrating test-driven development (TDD) into your
 development process: Just launch guard-phpspec before you start working and
@@ -77,9 +77,17 @@ href="http://php.net">PHP</a> version <a
 href="http://www.phpunit.de">PHPSpec</a> supports, it has only been tested
 on <a href="http://php.net">PHP</a> 5.3.8 and 5.4.4.</p>
 
-<h2 id="label-Author">Author</h2>
-
-<p><a href="https://github.com/lsd">Isam Machlovi</a></p>
+<h2 id="label-Meta">Meta</h2>
+<ul><li>
+<p>Isam Machlovi: <a href="http://pwnjutsu.com">pwnjutsu.com</a>
+<strong>|</strong> <a href="https://github.com/lsd">github.com/lsd</a></p>
+</li><li>
+<p>Source on GitHub: <a
+href="https://github.com/lsd/guard-phpspec">github.com/lsd/guard-phpspec</a></p>
+</li><li>
+<p>RubyGems.org Source: <a
+href="https://rubygems.org/lsd/guard-phpspec">rubygems.org/lsd/guard-phpspec</a></p>
+</li></ul>
 
 <h2 id="label-Install">Install</h2>
 
@@ -92,14 +100,44 @@ proceed with the installation.</p>
 packages-manager called <code>gem</code>. <code>gem</code> can be used to
 install various packages, including guard-phpspec.</p>
 
-<p>To install guard-phpspec, run the following command in the terminal:</p>
+<p>To install guard-phpspec using gem, run the following command:</p>
 
-<pre class="code ruby"><code class="ruby"></code></pre>
+<p><code>$ gem install guard-phpspec</code></p>
+
+<p>but I suggest instead using Bundler/Gemfile when possible.</p>
+
+<p>Update your Gemfile</p>
+
+<pre class="code ruby"><code class="ruby">group :test do
+  gem &#39;guard&#39;
+  gem &#39;guard-phpspec&#39;, &#39;1.0.*@dev&#39;
+gem</code></pre>
+
+<p>Then create/update the Guardfile to include PHPSpec watcher</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_run'>run</span> <span class='backtick'>`</span><span class='tstring_content'>guard init phpspec</span><span class='tstring_end'>`</span></span> <span class='kw'>or</span> <span class='backtick'>`</span><span class='tstring_content'>bundle exec guard init phpspec</span><span class='tstring_end'>`</span></span></code></pre>
+
+<p>This appends initialization of “guard-phpspec” to the Guardfile. You can
+manually update your Guardfile without <code>guard init phpspec</code></p>
+
+<pre class="code ruby"><code class="ruby">  <span class='id identifier rubyid_guard'>guard</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>phpspec</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='symbol'>:tests_path</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>spec</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='symbol'>:cli</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>--colors</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_watch'>watch</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>%r{</span><span class='tstring_content'>^.+Spec\.php$</span><span class='regexp_end'>}</span></span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+</code></pre>
+
+<h2 id="label-Validate+installation+with+Guard%3A%3APHPSpec%27s+own+specs">Validate installation with Guard::PHPSpec&#39;s own specs</h2>
+
+<p>If you would like to run the specs guard-phpspec comes with:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_cd'>cd</span> <span class='backtick'>`</span><span class='tstring_content'>gem phpspec</span><span class='tstring_end'>`</span></span>
+<span class='id identifier rubyid_rspec'>rspec</span> <span class='id identifier rubyid_spec'>spec</span>
+<span class='id identifier rubyid_…'>…</span></code></pre>
 
 <h2 id="label-Usage">Usage</h2>
 
-<p>Please read the <a href="https://github.com/guard/guard#readme">Guard usage
-documentation</a>.</p>
+<p>Just run <code>guard</code> or <code>bundle exec guard</code> in the in
+root working dir (where /specs dir is) Please read the <a
+href="https://github.com/guard/guard#readme">Guard usage documentation</a>.</p>
 
 <h2 id="label-Guardfile">Guardfile</h2>
 
@@ -122,12 +160,12 @@ uses the <code>Tests</code> directory for its tests.</p>
 
 <p>An example of the Guardfile for the same project would look something like:</p>
 
-<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_guard'>guard</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>phpunit</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='symbol'>:tests_path</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Tests</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='symbol'>:cli</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>--colors</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>do</span>
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_guard'>guard</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>phpspec</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='symbol'>:tests_path</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>spec</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='symbol'>:cli</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>--colors</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>do</span>
   <span class='comment'># Watch tests files
-</span>  <span class='id identifier rubyid_watch'>watch</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>%r{</span><span class='tstring_content'>^.+Test\.php$</span><span class='regexp_end'>}</span></span><span class='rparen'>)</span>
+</span>  <span class='id identifier rubyid_watch'>watch</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>%r{</span><span class='tstring_content'>^.+_?[sS]pec\.php$</span><span class='regexp_end'>}</span></span><span class='rparen'>)</span>
 
   <span class='comment'># Watch library files and run their tests
-</span>  <span class='id identifier rubyid_watch'>watch</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>%r{</span><span class='tstring_content'>^Object/(.+)\.php</span><span class='regexp_end'>}</span></span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_m'>m</span><span class='op'>|</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Tests/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_m'>m</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_content'>Test.php</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
+</span>  <span class='id identifier rubyid_watch'>watch</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>%r{</span><span class='tstring_content'>^Object/(.+)\.php</span><span class='regexp_end'>}</span></span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_m'>m</span><span class='op'>|</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Tests/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_m'>m</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_content'>Spec.php</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
 <span class='kw'>end</span>
 </code></pre>
 
@@ -135,25 +173,28 @@ uses the <code>Tests</code> directory for its tests.</p>
 
 <p>The following options can be passed to Guard::PHPSpec:</p>
 
-<pre class="code ruby"><code class="ruby">:all_on_start =&gt; false        # Run all tests on startup.
-                              # default: true
+<pre class="code ruby"><code class="ruby">      :all_on_start =&gt; false     # Run all tests on startup.
+                                 # default: true
 
-:all_after_pass =&gt; false      # Run all tests after changed tests pass. This ensures
-                              # that the process of making changed tests pass didn&#39;t
-                              # break something else.
-                              # default: true
+      :all_after_pass =&gt; false  # Run all tests after changed tests pass. This ensures
+                                # that the process of making changed tests pass didn&#39;t
+                                # break something else.
+                                # default: true
 
-:keep_failed =&gt; false         # Remember failed tests and keep running them with
-                              # each change until they pass.
-                              # default: true
 
-:tests_path =&gt; &#39;tests&#39;        # Relative path to the tests directory. This path
-                              # is used when running all the tests.
-                              # default: the current working directory (pwd)
+      :keep_failed =&gt; false     # Remember failed tests and keep running them with
+                                # each change until they pass.
+                                # default: true
 
-:cli =&gt; &#39;--colors&#39;            # The options passed to the phpunit command
-                              # when running the tests.
-                              # default: nil
+
+      :tests_path =&gt; &#39;tests&#39;    # Relative path to the tests directory. This path
+                                # is used when running all the tests.
+                                # default: the current working directory (pwd)
+
+
+      :cli =&gt; &#39;--colors&#39;        # The options passed to the phpunit command
+                                # when running the tests.
+                                # default: nil
 </code></pre>
 
 <h2 id="label-Development">Development</h2>
@@ -167,7 +208,7 @@ href="https://github.com/lsd/guard-phpspec/issues">GitHub Issues</a></p>
 </div></div>
 
     <div id="footer">
-  Generated on Sat Aug 24 15:20:45 2013 by
+  Generated on Mon Aug 26 02:46:10 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7 (ruby-2.0.0).
 </div>

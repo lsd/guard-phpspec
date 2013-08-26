@@ -1,4 +1,7 @@
 .idea
+.swp
+._~
 .DS_Store
 .yardoc
-/*.gem
+*.gem
+build/*.gem
