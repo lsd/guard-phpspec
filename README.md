@@ -121,7 +121,5 @@ The following options can be passed to Guard::PHPSpec:
 
 [1]:http://ruby-lang.org
 [3]:https://github.com/guard/guard#readme
-[4]:http://www.phpunit.de/manual/current/en/
-[5]:https://github.com/sebastianbergmann/php-object-freezer/
-[6]:http://www.phpunit.de
+[6]:http://phpspec.net
 [7]:http://php.net
