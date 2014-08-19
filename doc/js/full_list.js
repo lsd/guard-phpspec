@@ -17,7 +17,7 @@ function fullListSearch() {
   searchCache = [];
   $('#full_list li').each(function() {
     var link = $(this).find('.object_link a');
-    if (link.length === 0) return;
+    if (link.length === 0) { return; }
     var fullName = link.attr('title').split(' ')[0];
     searchCache.push({name:link.text(), fullName:fullName, node:$(this), link:link});
   });
@@ -40,7 +40,7 @@ function fullListSearch() {
       $('#full_list li').removeClass('found').each(function() {
 
         var link = $(this).find('.object_link a');
-        if (link.length > 0) link.text(link.text());
+        if (link.length > 0) { link.text(link.text()); }
       });
       if (clicked) {
         clicked.parents('ul').each(function() {
@@ -50,7 +50,7 @@ function fullListSearch() {
       highlight();
     }
     else {
-      if (inSearch) clearTimeout(inSearch);
+      if (inSearch) { clearTimeout(inSearch); }
       searchIndex = 0;
       lastRowClass = '';
       $('#full_list, #content').addClass('insearch');
@@ -70,35 +70,24 @@ function searchItem() {
     var searchName = (searchString.indexOf('::') != -1 ? item.fullName : item.name);
     var matchString = regexSearchString;
     var matchRegexp = new RegExp(matchString, caseSensitiveMatch ? "" : "i");
+
     if (searchName.match(matchRegexp) === null) {
       item.node.removeClass('found');
-    }
-    else {
+    } else {
       item.node.css('padding-left', '10px').addClass('found');
       item.node.parents().addClass('search_uncollapsed');
       item.node.removeClass(lastRowClass).addClass(lastRowClass === 'r1' ? 'r2' : 'r1');
       lastRowClass = item.node.hasClass('r1') ? 'r1' : 'r2';
       item.link.html(item.name.replace(matchRegexp, "<strong>$&</strong>"));
     }
-
-    if (searchCache.length === searchIndex + 1) {
-      searchDone();
-      return;
-    }
-    else {
-      searchIndex++;
-    }
   }
-  inSearch = setTimeout(searchItem, 0);
+  return [];
 }
 
 function searchDone() {
   highlight(true);
   if ($('#full_list li:visible').size() === 0) {
     $('#noresults').text('No results were found.').hide().fadeIn();
-  }
-  else {
-    $('#noresults').text('');
   }
   $('#content').removeClass('insearch');
   clearTimeout(inSearch);
@@ -108,41 +97,27 @@ function searchDone() {
 clicked = null;
 function linkList() {
   $('#full_list li, #full_list li a:last').click(function(evt) {
-    if ($(this).hasClass('toggle')) return true;
     if (this.tagName.toLowerCase() === "li") {
       if ($(this).find('.object_link a').length === 0) {
         $(this).children('a.toggle').click();
         return false;
       }
-      var toggle = $(this).children('a.toggle');
-      if (toggle.size() > 0 && evt.pageX < toggle.offset().left) {
-        toggle.click();
-        return false;
-      }
     }
-    if (clicked) clicked.removeClass('clicked');
+    if (clicked) { clicked.removeClass('clicked'); }
     var win = window.top.frames.main ? window.top.frames.main : window.parent;
     if (this.tagName.toLowerCase() === "a") {
       clicked = $(this).parents('li').addClass('clicked');
       win.location = this.href;
-    }
-    else {
-      clicked = $(this).addClass('clicked');
-      win.location = $(this).find('a:last').attr('href');
     }
     return false;
   });
 }
 
 function collapse() {
-  if (!$('#full_list').hasClass('class')) return;
   $('#full_list.class a.toggle').click(function() {
     $(this).parent().toggleClass('collapsed').next().toggleClass('collapsed');
     highlight();
     return false;
-  });
-  $('#full_list.class ul').each(function() {
-    $(this).addClass('collapsed').prev().addClass('collapsed');
   });
   $('#full_list.class').children().removeClass('collapsed');
   highlight();
@@ -171,6 +146,4 @@ function escapeShortcut() {
 }
 
 $(escapeShortcut);
-$(fullListSearch);
-$(linkList);
 $(collapse);
