@@ -1,6 +1,6 @@
-# Guard::PHPSpec
+<a href="https://codeclimate.com/github/lsd/guard-phpspec"><img src="https://codeclimate.com/github/lsd/guard-phpspec/badges/gpa.svg" /></a>
 
-## Desc
+## Guard::PHPSpec
 
 **guard-phpspec** allows you to automatically run [PHPSpec][6] tests when sources
 are modified. It helps with integrating test-driven development (TDD) into
