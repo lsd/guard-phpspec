@@ -1,4 +1,4 @@
-var inSearch = null;
+var inSearch;
 var searchIndex = 0;
 var searchCache = [];
 var searchString = '';
@@ -10,7 +10,7 @@ var commandKey = 91;
 
 RegExp.escape = function(text) {
     return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
-}
+};
 
 function fullListSearch() {
   // generate cache
@@ -23,11 +23,9 @@ function fullListSearch() {
   });
 
   $('#search input').keyup(function(event) {
-    if ((event.keyCode > ignoreKeyCodeMin && event.keyCode < ignoreKeyCodeMax)
-         || event.keyCode == commandKey)
-      return;
+    if ((event.keyCode > ignoreKeyCodeMin && event.keyCode < ignoreKeyCodeMax) || event.keyCode === commandKey) { return; }
     searchString = this.value;
-    caseSensitiveMatch = searchString.match(/[A-Z]/) != null;
+    caseSensitiveMatch = searchString.match(/[A-Z]/) !== null;
     regexSearchString = RegExp.escape(searchString);
     if (caseSensitiveMatch) {
       regexSearchString += "|" +
@@ -72,13 +70,13 @@ function searchItem() {
     var searchName = (searchString.indexOf('::') != -1 ? item.fullName : item.name);
     var matchString = regexSearchString;
     var matchRegexp = new RegExp(matchString, caseSensitiveMatch ? "" : "i");
-    if (searchName.match(matchRegexp) == null) {
+    if (searchName.match(matchRegexp) === null) {
       item.node.removeClass('found');
     }
     else {
       item.node.css('padding-left', '10px').addClass('found');
       item.node.parents().addClass('search_uncollapsed');
-      item.node.removeClass(lastRowClass).addClass(lastRowClass == 'r1' ? 'r2' : 'r1');
+      item.node.removeClass(lastRowClass).addClass(lastRowClass === 'r1' ? 'r2' : 'r1');
       lastRowClass = item.node.hasClass('r1') ? 'r1' : 'r2';
       item.link.html(item.name.replace(matchRegexp, "<strong>$&</strong>"));
     }
@@ -91,7 +89,7 @@ function searchItem() {
       searchIndex++;
     }
   }
-  inSearch = setTimeout('searchItem()', 0);
+  inSearch = setTimeout(searchItem, 0);
 }
 
 function searchDone() {
@@ -111,7 +109,7 @@ clicked = null;
 function linkList() {
   $('#full_list li, #full_list li a:last').click(function(evt) {
     if ($(this).hasClass('toggle')) return true;
-    if (this.tagName.toLowerCase() == "li") {
+    if (this.tagName.toLowerCase() === "li") {
       if ($(this).find('.object_link a').length === 0) {
         $(this).children('a.toggle').click();
         return false;
@@ -124,7 +122,7 @@ function linkList() {
     }
     if (clicked) clicked.removeClass('clicked');
     var win = window.top.frames.main ? window.top.frames.main : window.parent;
-    if (this.tagName.toLowerCase() == "a") {
+    if (this.tagName.toLowerCase() === "a") {
       clicked = $(this).parents('li').addClass('clicked');
       win.location = this.href;
     }
@@ -153,7 +151,7 @@ function collapse() {
 function highlight(no_padding) {
   var n = 1;
   $('#full_list li:visible').each(function() {
-    var next = n == 1 ? 2 : 1;
+    var next = n === 1 ? 2 : 1;
     $(this).removeClass("r" + next).addClass("r" + n);
     if (!no_padding && $('#full_list').hasClass('class')) {
       $(this).css('padding-left', (10 + $(this).parents('ul').size() * 15) + 'px');
@@ -164,7 +162,7 @@ function highlight(no_padding) {
 
 function escapeShortcut() {
   $(document).keydown(function(evt) {
-    if (evt.which == 27) {
+    if (evt.which === 27) {
       $('#search_frame', window.top.document).slideUp(100);
       $('#search a', window.top.document).removeClass('active inactive');
       $(window.top).focus();

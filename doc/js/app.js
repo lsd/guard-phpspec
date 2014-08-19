@@ -58,7 +58,7 @@ function searchFrameLinks() {
 function toggleSearchFrame(id, link) {
   var frame = $('#search_frame');
   $('#search a').removeClass('active').addClass('inactive');
-  if (frame.attr('src') == link && frame.css('display') != "none") {
+  if (frame.attr('src') === link && frame.css('display') != "none") {
     frame.slideUp(100);
     $('#search a').removeClass('active inactive');
   }
@@ -90,8 +90,8 @@ function keyboardShortcuts() {
   $(document).keypress(function(evt) {
     if (evt.altKey || evt.ctrlKey || evt.metaKey || evt.shiftKey) return;
     if (typeof evt.target !== "undefined" &&
-        (evt.target.nodeName == "INPUT" ||
-        evt.target.nodeName == "TEXTAREA")) return;
+        (evt.target.nodeName === "INPUT" ||
+        evt.target.nodeName === "TEXTAREA")) return;
     switch (evt.charCode) {
       case 67: case 99:  $('#class_list_link').click(); break;  // 'c'
       case 77: case 109: $('#method_list_link').click(); break; // 'm'
@@ -107,7 +107,7 @@ function summaryToggle() {
       localStorage.summaryCollapsed = $(this).text();
     }
     $('.summary_toggle').each(function() {
-      $(this).text($(this).text() == "collapse" ? "expand" : "collapse");
+      $(this).text($(this).text() === "collapse" ? "expand" : "collapse");
       var next = $(this).parent().parent().nextAll('ul.summary').first();
       if (next.hasClass('compact')) {
         next.toggle();
@@ -128,7 +128,7 @@ function summaryToggle() {
     return false;
   });
   if (localStorage) {
-    if (localStorage.summaryCollapsed == "collapse") {
+    if (localStorage.summaryCollapsed === "collapse") {
       $('.summary_toggle').first().click();
     }
     else localStorage.summaryCollapsed = "expand";
@@ -153,15 +153,16 @@ function generateTOC() {
   for (i = 0; i < tags.length; i++) { tags[i] = '#filecontents ' + tags[i]; }
   var lastTag = parseInt(tags[0][1], 10);
   $(tags.join(', ')).each(function() {
-    if ($(this).parents('.method_details .docstring').length != 0) return;
-    if (this.id == "filecontents") return;
+    if ($(this).parents('.method_details .docstring').length !== 0) return;
+    if (this.id === "filecontents") return;
     show = true;
     var thisTag = parseInt(this.tagName[1], 10);
     if (this.id.length === 0) {
-      var proposedId = $(this).attr('toc-id');
+      var proposedId;
+      proposedId = $(this).attr('toc-id');
       if (typeof(proposedId) != "undefined") this.id = proposedId;
       else {
-        var proposedId = $(this).text().replace(/[^a-z0-9-]/ig, '_');
+        proposedId = $(this).text().replace(/[^a-z0-9-]/ig, '_');
         if ($('#' + proposedId).length > 0) { proposedId += counter; counter++; }
         this.id = proposedId;
       }
@@ -175,7 +176,7 @@ function generateTOC() {
       for (i = 0; i < lastTag - thisTag; i++) toc = toc.parent();
     }
     var title = $(this).attr('toc-title');
-    if (typeof(title) == "undefined") title = $(this).text();
+    if (typeof(title) === "undefined") title = $(this).text();
     toc.append('<li><a href="#' + this.id + '">' + title + '</a></li>');
     lastTag = thisTag;
   });
